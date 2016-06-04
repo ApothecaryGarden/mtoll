@@ -1,0 +1,17 @@
+{
+  "generator-plugin-wp": {
+    "name": "Mtoll",
+    "homepage": "http://wpguru4u.com",
+    "description": "A little bit of Awesomeness for Maia",
+    "version": "1.0.0",
+    "author": "wpguru4u",
+    "authoremail": "wpguru4u@gmail.com",
+    "authorurl": "http://wpguru4u.com",
+    "license": "GPLv2",
+    "slug": "mtoll",
+    "classname": "Mtoll",
+    "classprefix": "M_",
+    "prefix": "mtoll",
+    "year": 2016
+  }
+}

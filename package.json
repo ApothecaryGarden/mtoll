@@ -1,0 +1,17 @@
+{
+	"name": "mtoll",
+	"title": "Mtoll",
+	"version": "1.0.0",
+	"description": "A little bit of Awesomeness for Maia",
+	"author": {
+		"name": "wpguru4u",
+		"url": "http://wpguru4u.com"
+	},
+	"license": "GPLv2",
+	"devDependencies": {
+	    "grunt": "latest",
+	    "grunt-contrib-watch": "latest",
+	    "grunt-wp-i18n": "latest",
+	    "load-grunt-tasks": "latest"
+	}
+}

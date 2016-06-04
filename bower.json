@@ -1,0 +1,18 @@
+{
+  "name": "mtoll",
+  "description": "A little bit of Awesomeness for Maia",
+  "license": "GPLv2",
+  "authors": [
+    "wpguru4u"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}
