@@ -55,3 +55,35 @@ add_filter( 'wcs_view_subscription_actions', 'eg_remove_my_subscriptions_button'
 // Just in case removing the button isn't enough
 // https://gist.github.com/thenbrent/8851189
 add_filter( 'wcs_can_user_resubscribe_to_subscription', '__return_false', 100 );
+
+
+/**
+ * [autocomplete_virtual_orders description]
+ * @param  [type] $order_status [description]
+ * @param  [type] $order_id     [description]
+ * @return [type]               [description]
+ */
+function autocomplete_virtual_orders( $order_status, $order_id ) {
+	$order = new WC_Order( $order_id );
+	if ( 'processing' == $order_status && ( 'on-hold' == $order->status || 'pending' == $order->status || 'failed' == $order->status ) ) {
+		$virtual_order = null;
+		if ( count( $order->get_items()) > 0 ) {
+			foreach ( $order->get_items() as $item ) {
+				if ( 'line_item' == $item['type'] ) {
+					$_product = $order->get_product_from_item( $item );
+					if ( !$_product->is_virtual() ) {
+						$virtual_order = false;
+						break;
+					} else {
+						$virtual_order = true;
+					}
+				}
+			}
+		}
+		if ($virtual_order) {
+			return 'completed';
+		}
+	}
+	return $order_status;
+}
+add_filter( 'woocommerce_payment_complete_order_status', 'autocomplete_virtual_orders', 10, 2 );

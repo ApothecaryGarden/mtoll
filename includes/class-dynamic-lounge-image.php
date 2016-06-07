@@ -99,11 +99,13 @@ class M_Dynamic_Lounge_Image extends WP_Widget {
 	public function widget( $args, $instance ) {
 		echo self::get_widget( array(
 			'before_widget' => $args['before_widget'],
-			'after_widget'  => $args['after_widget'],
 			'before_title'  => $args['before_title'],
-			'after_title'   => $args['after_title'],
 			'title'         => $instance['title'],
+			'after_title'   => $args['after_title'],
+			'img'          => $instance['img'],
+			'after_widget'  => $args['after_widget'],
 			'text'          => $instance['text'],
+
 		) );
 	}
 
@@ -131,26 +133,27 @@ class M_Dynamic_Lounge_Image extends WP_Widget {
 			(array) $atts,
 			self::$shortcode
 		);
-/*
+
 		// Before widget hook.
 		$widget .= $atts['before_widget'];
 
 		// Title.
 		$widget .= ( $atts['title'] ) ? $atts['before_title'] . esc_html( $atts['title'] ) . $atts['after_title'] : '';
 
+		if ( 'open' === maiatoll_get_option( 'maiatoll_luna_lounge_open' ) ) {
+			$img = wp_get_attachment_image( maiatoll_get_option( 'lounge_open_image_id' ), 'large' );
+			$atts['img'] = '<a href="' . esc_url( get_permalink( maiatoll_get_option( 'maiatoll_link_lounge_open_image' ) ) ) . '">' . $img . '</a>';
+			$widget .= $atts['img'];
+		} else {
+			$img = wp_get_attachment_image( maiatoll_get_option( 'lounge_closed_image_id' ), 'large' );
+			$atts['img'] = '<a href="' . esc_url( get_permalink( maiatoll_get_option( 'maiatoll_luna_lounge_closed_redirect' ) ) ) . '">' . $img . '</a>';
+			$widget .= $atts['img'];
+		}
+
 		$widget .= wpautop( wp_kses_post( $atts['text'] ) );
 
 		// After widget hook.
 		$widget .= $atts['after_widget'];
-*/
-		if ( 'open' === maiatoll_get_option( 'maiatoll_luna_lounge_open' ) ) {
-			$img = wp_get_attachment_image( maiatoll_get_option( 'lounge_open_image_id' ), 'large' );
-			$atts['text'] = '<a href="' . esc_url( get_permalink( maiatoll_get_option( 'maiatoll_link_lounge_open_image' ) ) ) . '">' . $img . '</a>';
-			$widget .= $atts['text'];
-		} else {
-			$atts['text'] = wp_get_attachment_image( maiatoll_get_option( 'lounge_closed_image_id' ), 'large' );
-			$widget .= $atts['text'];
-		}
 
 		return $widget;
 	}

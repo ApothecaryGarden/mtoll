@@ -35,7 +35,6 @@ class M_Luna_Woofunnels {
 	public function hooks() {
 		add_filter( 'woocommerce_default_address_fields' , 			array( $this, 'override_default_address_fields' ) );
 		add_filter( 'woocommerce_checkout_fields' , 				array( $this, 'override_checkout_fields' ) );
-		add_filter( 'woocommerce_payment_complete_order_status', 	array( $this, 'autocomplete_virtual_orders', 10, 2 ) );
 		add_filter( 'wc_get_template', 								array( $this, 'order_review_template' ), 10, 5 );
 
 	}
@@ -62,30 +61,6 @@ class M_Luna_Woofunnels {
 		$address_fields['state']['required'] = false;
 		$address_fields['phone']['required'] = false;
 		return $address_fields;
-	}
-
-	public function autocomplete_virtual_orders( $order_status, $order_id ) {
-		$order = new WC_Order( $order_id );
-		if ( 'processing' == $order_status && ( 'on-hold' == $order->status || 'pending' == $order->status || 'failed' == $order->status ) ) {
-			$virtual_order = null;
-			if ( count( $order->get_items()) > 0 ) {
-				foreach ( $order->get_items() as $item ) {
-					if ( 'line_item' == $item['type'] ) {
-						$_product = $order->get_product_from_item( $item );
-						if ( !$_product->is_virtual() ) {
-							$virtual_order = false;
-							break;
-						} else {
-							$virtual_order = true;
-						}
-					}
-				}
-			}
-			if ($virtual_order) {
-				return 'completed';
-			}
-		}
-		return $order_status;
 	}
 
 	/**

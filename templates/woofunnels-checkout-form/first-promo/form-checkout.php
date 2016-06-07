@@ -37,8 +37,9 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', WC()->cart->g
 			//	$p2['products'] = '13347';
 			//	WooFunnels_pb::woofunnels_offer_block( $p1, 'maia-lunar-lounge-table' );
 			//	$p2['products'] = '13594,13593';
-				$p2['products'] = get_post_meta( get_the_ID(), 'woofunnels_products_to_display', true );
-				WooFunnels_pb::woofunnels_offer_block( $p2, 'first-promo-block' );
+			//	$p2['products'] = get_post_meta( get_the_ID(), 'woofunnels_products_to_display', true );
+			//	WooFunnels_pb::woofunnels_offer_block( $p2, 'first-promo-block' );
+			//	WooFunnels_pb::woofunnels_offer_block( $p2, 'product-single' );
 			//	$p2['products'] = '13594,13593,13746';
 			//	WooFunnels_pb::woofunnels_offer_block( $p2, 'product-single' );
 			?>

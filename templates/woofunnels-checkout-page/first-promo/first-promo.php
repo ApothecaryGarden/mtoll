@@ -5,31 +5,6 @@
  * @package    WordPress
  * @since      1.0
  */
-?><!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php wp_title( '|', true, 'right' ); ?></title>
-	<link rel="profile" href="http://gmpg.org/xfn/11" />
-	<?php if ( get_theme_mod( 'penci_favicon' ) ) : ?>
-		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_mod( 'penci_favicon' ) ); ?>" type="image/x-icon" />
-	<?php endif; ?>
-	<link rel="alternate" type="application/rss+xml" title="<?php bloginfo( 'name' ); ?> RSS Feed" href="<?php bloginfo( 'rss2_url' ); ?>" />
-	<link rel="alternate" type="application/atom+xml" title="<?php bloginfo( 'name' ); ?> Atom Feed" href="<?php bloginfo( 'atom_url' ); ?>" />
-	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
-	<!--[if lt IE 9]>
-	<script src="<?php echo get_template_directory_uri(); ?>/js/html5.js"></script>
-	<style type="text/css">
-		.featured-carousel .item { opacity: 1; }
-	</style>
-	<![endif]-->
-	<?php wp_head(); ?>
-</head>
-
-<body <?php body_class(); ?>>
-<?php
 /**
  * Get header layout in your customizer to change header layout
  *
@@ -96,6 +71,11 @@ if ( ! isset( $header_layout ) || empty( $header_layout ) ) {
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<div class="post-entry">
 					<div class="inner-post-entry">
+						<?php
+						$p2['products'] = get_post_meta( get_the_ID(), 'woofunnels_products_to_display', true );
+						WooFunnels_pb::woofunnels_offer_block( $p2, 'first-promo-block' );
+					//	WooFunnels_pb::woofunnels_offer_block( $p2, 'product-single' );
+						?>
 						<?php echo WooFunnels_Checkout_Form::get_checkout_form(); ?>
 					</div>
 				</div>
@@ -136,7 +116,3 @@ if ( ! isset( $header_layout ) || empty( $header_layout ) ) {
 </div><!-- End .wrapper-boxed -->
 
 <div id="fb-root"></div>
-
-<?php wp_footer(); ?>
-</body>
-</html>
