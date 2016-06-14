@@ -165,6 +165,18 @@ class MaiaToll_Admin {
 		) );
 
 		$cmb->add_field( array(
+			'name'        => __( 'Sign up/in content block page id' ),
+			'id'          => 'maiatoll_witchcamp_sign_up_in',
+			'type'        => 'post_search_text', // This field type
+			// post type also as array
+			'post_type'   => 'page',
+			// Default is 'checkbox', used in the modal view to select the post type
+			'select_type' => 'radio',
+			// Will replace any selection with selection from modal. Default is 'add'
+			'select_behavior' => 'replace',
+		) );
+
+		$cmb->add_field( array(
 			'name'        => __( 'The Hub page' ),
 			'id'          => 'maiatoll_hub_page',
 			'type'        => 'post_search_text', // This field type
