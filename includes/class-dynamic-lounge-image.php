@@ -102,7 +102,7 @@ class M_Dynamic_Lounge_Image extends WP_Widget {
 			'before_title'  => $args['before_title'],
 			'title'         => $instance['title'],
 			'after_title'   => $args['after_title'],
-			'img'          => $instance['img'],
+		//	'img'           => $args['img'],
 			'after_widget'  => $args['after_widget'],
 			'text'          => $instance['text'],
 
@@ -128,6 +128,7 @@ class M_Dynamic_Lounge_Image extends WP_Widget {
 				'before_title'  => '',
 				'after_title'   => '',
 				'title'         => '',
+				'img'           => '',
 				'text'          => '',
 			),
 			(array) $atts,
