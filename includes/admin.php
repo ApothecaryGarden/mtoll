@@ -227,6 +227,62 @@ class MaiaToll_Admin {
 			),
 		) );
 
+		$cmb->add_field( array(
+			'name'    => 'Witch Camp left logo',
+			'desc'    => '',
+			'id'      => 'wc_left_logo',
+			'type'    => 'file',
+			// Optional:
+			'options' => array(
+				'url' => false, // Hide the text input for the url
+			),
+			'text'    => array(
+				'add_upload_file_text' => 'Add Image' // Change upload button text. Default: "Add or Upload File"
+			),
+		) );
+
+		$cmb->add_field( array(
+			'name'    => 'Witch Camp right logo',
+			'desc'    => '',
+			'id'      => 'wc_right_logo',
+			'type'    => 'file',
+			// Optional:
+			'options' => array(
+				'url' => false, // Hide the text input for the url
+			),
+			'text'    => array(
+				'add_upload_file_text' => 'Add Image' // Change upload button text. Default: "Add or Upload File"
+			),
+		) );
+
+		$cmb->add_field( array(
+			'name'    => 'Witch Camp mobile logo',
+			'desc'    => '',
+			'id'      => 'wc_mobile_logo',
+			'type'    => 'file',
+			// Optional:
+			'options' => array(
+				'url' => false, // Hide the text input for the url
+			),
+			'text'    => array(
+				'add_upload_file_text' => 'Add Image' // Change upload button text. Default: "Add or Upload File"
+			),
+		) );
+
+		$cmb->add_field( array(
+			'name'    => 'Witch Camp sidebar logo',
+			'desc'    => '',
+			'id'      => 'wc_sidebar_logo',
+			'type'    => 'file',
+			// Optional:
+			'options' => array(
+				'url' => false, // Hide the text input for the url
+			),
+			'text'    => array(
+				'add_upload_file_text' => 'Add Image' // Change upload button text. Default: "Add or Upload File"
+			),
+		) );
+
 	}
 	/**
 	 * Register settings notices for display
