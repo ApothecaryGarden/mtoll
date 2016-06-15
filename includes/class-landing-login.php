@@ -143,7 +143,7 @@ class M_Landing_Login extends WP_Widget {
 			$widget .= $atts['login'];
 	//		$widget .= wpautop( wp_kses_post( $atts['text'] ) );
 			$widget .= wpautop( wp_kses_post( $atts['text'] ) );
-
+			$widget .= '<style type="text/css">.widget_mtoll-landing-login h2{display: none}.widget_mtoll-landing-login .woocommerce form.login{margin-top: 0;}</style>';
 			// After widget hook.
 			$widget .= $atts['after_widget'];
 		}
@@ -151,7 +151,6 @@ class M_Landing_Login extends WP_Widget {
 		return $widget;
 
 	}
-
 
 	/**
 	 * Update form values as they are saved.
