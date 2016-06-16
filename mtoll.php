@@ -555,3 +555,8 @@ function no_self_ping( &$links ) {
 }
 
 add_action( 'pre_ping', 'no_self_ping' );
+
+function mtoll_user_points_func( $atts ) {
+	return badgeos_get_users_points( get_current_user_id() );
+}
+add_shortcode( 'mtoll_user_points', 'mtoll_user_points_func' );
