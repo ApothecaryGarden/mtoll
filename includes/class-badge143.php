@@ -161,7 +161,7 @@ echo '<div class="mtoll-badge143-wrap">';
 			$query->the_post();
 			$earned_status = badgeos_get_user_achievements( array( 'user_id' => $user_ID, 'achievement_id' => absint( $query->post->ID ) ) ) ? 'user-has-earned' : 'user-has-not-earned';
 			$widget .= '<div class="badgeos-achievements-list-item '. $earned_status . '"><div class="badgeos-item-image">';
-			$widget .= '<a href="' . get_permalink( $query->post->ID ) . '">' . badgeos_get_achievement_post_thumbnail( $query->post->ID ) . '</a>';
+			$widget .= '<a href="' . get_permalink( $query->post->ID ) . '">' . badgeos_get_achievement_post_thumbnail( $query->post->ID, 'full' ) . '</a>';
 			$widget .= '</div></div><!-- .badgeos-item-image -->';
 		//	$widget .= $query->post->ID . ' apples<br />';
 		}
