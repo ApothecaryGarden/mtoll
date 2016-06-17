@@ -568,3 +568,39 @@ function mtoll_butterfly_badge(){
 		badgeos_award_achievement_to_user( '13738', get_current_user_id() );
 	}
 }
+
+/**
+ * Updates points for each comment but only once per post
+ * @param  [type] $comment_ID [description]
+ * @param  [type] $comment    [description]
+ * @return [type]             [description]
+ */
+function mtoll_point_for_comment( $comment_ID, $comment ) {
+
+	// Enforce array for both hooks (wp_insert_comment uses object, comment_{status}_comment uses array)
+	if ( is_object( $comment ) ) {
+		$comment = get_object_vars( $comment );
+	}
+
+	// Check if comment is approved
+	if ( 1 != (int) $comment[ 'comment_approved' ] ) {
+		return;
+	}
+
+	if ( ! wc_memberships_is_user_active_member( $comment['user_id'], '13845' ) ) {
+		return;
+	}
+	$args = array(
+		'post_id'	=> $comment['comment_post_ID'],
+		'user_id'	=> $comment['user_id']
+		);
+	$comments_query = new WP_Comment_Query;
+	$comments = $comments_query->query( $args );
+
+	$total = count($comments);
+
+	if ( '1' == $total ) {
+		badgeos_award_achievement_to_user( '14810', $comment['user_id'] );
+	}
+}
+add_action( 'wp_insert_comment', 'mtoll_point_for_comment', 0, 2 );
