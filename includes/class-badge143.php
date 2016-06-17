@@ -138,8 +138,6 @@ class M_Badge143 extends WP_Widget {
 		// Title.
 		$widget .= ( $atts['title'] ) ? $atts['before_title'] . esc_html( $atts['title'] ) . $atts['after_title'] : '';
 
-//		$widget .= wpautop( wp_kses_post( $atts['text'] ) );
-
 		// After widget hook.
 
 wp_reset_postdata();
@@ -171,6 +169,13 @@ echo '<div class="mtoll-badge143-wrap">';
 echo '</div>';
 // Restore original Post Data
 wp_reset_postdata();
+		$content = $atts['text'];
+	//	$content = $wp_embed->autoembed( $content );
+	//	$content = $wp_embed->run_shortcode( $content );
+		$content = do_shortcode( $content );
+		$content = wpautop( wp_kses_post( $content ) );
+		$widget .= $content;
+
 		$widget .= $atts['after_widget'];
 
 		return $widget;
