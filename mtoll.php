@@ -564,7 +564,7 @@ add_shortcode( 'mtoll_user_points', 'mtoll_user_points_func' );
 add_action( 'template_redirect', 'mtoll_butterfly_badge' );
 function mtoll_butterfly_badge(){
 	global $post;
-	if ( '14738' == $post->ID ){
+	if ( '14875' == $post->ID ){
 		badgeos_award_achievement_to_user( '13738', get_current_user_id() );
 	}
 }
