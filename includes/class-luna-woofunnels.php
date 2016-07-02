@@ -37,6 +37,7 @@ class M_Luna_Woofunnels {
 		add_filter( 'woocommerce_checkout_fields' , 				array( $this, 'override_checkout_fields' ) );
 		add_filter( 'wc_get_template', 								array( $this, 'order_review_template' ), 10, 5 );
 		add_filter( 'woocommerce_nyp_error_message_templates', 		array( $this, 'mtoll_woocommerce_nyp_error_message_templates' ) );
+		add_action( 'wp_print_scripts', array( $this, 'wc_ninja_remove_password_strength' ), 100 );
 	}
 
 	public function override_checkout_fields( $fields ) {
@@ -84,4 +85,11 @@ class M_Luna_Woofunnels {
 		$message['minimum_js'] = __( 'Hmmm... are you sure you\'re into this? Money is energy and it doesn\'t look like Witch Camp is where your energy is right now. I\'ll still love you if you treat yourself to a venti latte instead.', 'wc_name_your_price' );
 		return $message;
 	}
+
+	public function wc_ninja_remove_password_strength() {
+		if ( wp_script_is( 'wc-password-strength-meter', 'enqueued' ) ) {
+			wp_dequeue_script( 'wc-password-strength-meter' );
+		}
+	}
+
 }
