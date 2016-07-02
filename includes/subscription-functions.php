@@ -1,4 +1,5 @@
 <?php
+
 if ( ! function_exists( 'woocommerce_order_again_button' ) ) {
 	function woocommerce_order_again_button( $order ) {
 		if ( ! $order || ! $order->has_status( 'completed' ) || ! is_user_logged_in() ) {
@@ -31,7 +32,7 @@ if ( ! function_exists( 'woocommerce_order_again_button' ) ) {
 function eg_remove_my_subscriptions_button( $actions, $subscription ) {
 	foreach ( $actions as $action_key => $action ) {
 		switch ( $action_key ) {
-			case 'change_payment_method':	// Hide "Change Payment Method" button?
+//			case 'change_payment_method':	// Hide "Change Payment Method" button?
 //			case 'change_address':		// Hide "Change Address" button?
 //			case 'switch':			// Hide "Switch Subscription" button?
 			case 'resubscribe':		// Hide "Resubscribe" button from an expired or cancelled subscription?
@@ -54,7 +55,7 @@ add_filter( 'wcs_view_subscription_actions', 'eg_remove_my_subscriptions_button'
  */
 // Just in case removing the button isn't enough
 // https://gist.github.com/thenbrent/8851189
-add_filter( 'wcs_can_user_resubscribe_to_subscription', '__return_false', 100 );
+// add_filter( 'wcs_can_user_resubscribe_to_subscription', '__return_false', 100 );
 
 
 /**

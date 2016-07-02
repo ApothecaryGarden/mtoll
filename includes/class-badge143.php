@@ -140,35 +140,35 @@ class M_Badge143 extends WP_Widget {
 
 		// After widget hook.
 
-wp_reset_postdata();
+		wp_reset_postdata();
 
-// WP_Query arguments
-$args = array (
-	'post_type'              => array( 'badges' ),
-	'post_status'            => array( 'publish' ),
-	'order'                  => 'DESC',
-	'orderby'                => 'menu_order',
-);
-global $user_ID;
-// The Query
-$query = new WP_Query( $args );
-// The Loop
-echo '<div class="mtoll-badge143-wrap">';
-	if ( $query->have_posts() ) {
-		while ( $query->have_posts() ) {
-			$query->the_post();
-			$earned_status = badgeos_get_user_achievements( array( 'user_id' => $user_ID, 'achievement_id' => absint( $query->post->ID ) ) ) ? 'user-has-earned' : 'user-has-not-earned';
-			$widget .= '<div class="badgeos-achievements-list-item '. $earned_status . '"><div class="badgeos-item-image">';
-			$widget .= '<a href="' . get_permalink( $query->post->ID ) . '">' . badgeos_get_achievement_post_thumbnail( $query->post->ID, 'full' ) . '</a>';
-			$widget .= '</div></div><!-- .badgeos-item-image -->';
-		//	$widget .= $query->post->ID . ' apples<br />';
-		}
-	} else {
-		// no posts found
-	}
-echo '</div>';
-// Restore original Post Data
-wp_reset_postdata();
+		// WP_Query arguments
+		$args = array (
+			'post_type'              => array( 'badges' ),
+			'post_status'            => array( 'publish' ),
+			'order'                  => 'DESC',
+			'orderby'                => 'menu_order',
+		);
+		global $user_ID;
+		// The Query
+		$query = new WP_Query( $args );
+		// The Loop
+		$widget .= '<div class="mtoll-badge143-wrap">';
+			if ( $query->have_posts() ) {
+				while ( $query->have_posts() ) {
+					$query->the_post();
+					$earned_status = badgeos_get_user_achievements( array( 'user_id' => $user_ID, 'achievement_id' => absint( $query->post->ID ) ) ) ? 'user-has-earned' : 'user-has-not-earned';
+					$widget .= '<div class="badgeos-achievements-list-item '. $earned_status . '"><div class="badgeos-item-image">';
+					$widget .= '<a href="' . get_permalink( $query->post->ID ) . '">' . badgeos_get_achievement_post_thumbnail( $query->post->ID, 'full' ) . '</a>';
+					$widget .= '</div></div><!-- .badgeos-item-image -->';
+				//	$widget .= $query->post->ID . ' apples<br />';
+				}
+			} else {
+				// no posts found
+			}
+		$widget .= '</div>';
+		// Restore original Post Data
+		wp_reset_postdata();
 		$content = $atts['text'];
 	//	$content = $wp_embed->autoembed( $content );
 	//	$content = $wp_embed->run_shortcode( $content );
