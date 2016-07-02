@@ -157,6 +157,7 @@ class Mtoll {
 		$this->theme_settings = new M_Theme_Settings( $this );
 		require( self::dir( 'includes/class-landing-login.php' ) );
 		$this->points = new M_Points( $this );
+		require( self::dir( 'includes/class-moon-phase.php' ) );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
