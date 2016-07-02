@@ -3,7 +3,7 @@
  * Plugin Name: Mtoll
  * Plugin URI:  http://wpguru4u.com
  * Description: A little bit of Awesomeness for Maia
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      wpguru4u
  * Author URI:  http://wpguru4u.com
  * Donate link: http://wpguru4u.com
@@ -156,6 +156,7 @@ class Mtoll {
 		$this->flower_oracle = new M_Flower_Oracle( $this );
 		$this->theme_settings = new M_Theme_Settings( $this );
 		require( self::dir( 'includes/class-landing-login.php' ) );
+		$this->points = new M_Points( $this );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
@@ -282,6 +283,7 @@ class Mtoll {
 			case 'luna_woofunnels':
 			case 'flower_oracle':
 			case 'theme_settings':
+			case 'points':
 				return $this->$field;
 			default:
 				throw new Exception( 'Invalid '. __CLASS__ .' property: ' . $field );
@@ -415,8 +417,6 @@ function mllp_product_block_template( $templates ) {
 /**
  *
  */
-
-
 function maia_login_redirect_url() {
 		$id  = get_queried_object_id();
 		$url = wc_get_page_permalink( 'myaccount' );
@@ -555,52 +555,3 @@ function no_self_ping( &$links ) {
 }
 
 add_action( 'pre_ping', 'no_self_ping' );
-
-function mtoll_user_points_func( $atts ) {
-	return badgeos_get_users_points( get_current_user_id() );
-}
-add_shortcode( 'mtoll_user_points', 'mtoll_user_points_func' );
-
-add_action( 'template_redirect', 'mtoll_butterfly_badge' );
-function mtoll_butterfly_badge(){
-	global $post;
-	if ( '14875' == $post->ID ){
-		badgeos_award_achievement_to_user( '13738', get_current_user_id() );
-	}
-}
-
-/**
- * Updates points for each comment but only once per post
- * @param  [type] $comment_ID [description]
- * @param  [type] $comment    [description]
- * @return [type]             [description]
- */
-function mtoll_point_for_comment( $comment_ID, $comment ) {
-
-	// Enforce array for both hooks (wp_insert_comment uses object, comment_{status}_comment uses array)
-	if ( is_object( $comment ) ) {
-		$comment = get_object_vars( $comment );
-	}
-
-	// Check if comment is approved
-	if ( 1 != (int) $comment[ 'comment_approved' ] ) {
-		return;
-	}
-
-	if ( ! wc_memberships_is_user_active_member( $comment['user_id'], '13845' ) ) {
-		return;
-	}
-	$args = array(
-		'post_id'	=> $comment['comment_post_ID'],
-		'user_id'	=> $comment['user_id']
-		);
-	$comments_query = new WP_Comment_Query;
-	$comments = $comments_query->query( $args );
-
-	$total = count($comments);
-
-	if ( '1' == $total ) {
-		badgeos_award_achievement_to_user( '14810', $comment['user_id'] );
-	}
-}
-add_action( 'wp_insert_comment', 'mtoll_point_for_comment', 0, 2 );

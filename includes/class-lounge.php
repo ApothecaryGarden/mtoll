@@ -63,6 +63,37 @@ class M_Lounge extends CPT_Core {
 			'title'         => __( 'Lounge Meta Box', 'mtoll' ),
 			'object_types'  => array( 'lounge' ),
 		) );
+
+		$cmb->add_field( array(
+			'name'    => 'Title',
+			'id'      => $prefix . 'title',
+			'type'    => 'text'
+		) );
+
+		$cmb->add_field( array(
+			'name'        => __( 'Award for commenting on this lounge' ),
+			'id'          => $prefix . 'point_for_comment',
+			'type'        => 'post_search_text', // This field type
+			// post type also as array
+			'post_type'   => 'point',
+			// Default is 'checkbox', used in the modal view to select the post type
+			'select_type' => 'radio',
+			// Will replace any selection with selection from modal. Default is 'add'
+			'select_behavior' => 'replace',
+		) );
+
+		$cmb->add_field( array(
+			'name'        => __( 'Award for attending this lounge' ),
+			'id'          => $prefix . 'point_for_attend',
+			'type'        => 'post_search_text', // This field type
+			// post type also as array
+			'post_type'   => 'point',
+			// Default is 'checkbox', used in the modal view to select the post type
+			'select_type' => 'radio',
+			// Will replace any selection with selection from modal. Default is 'add'
+			'select_behavior' => 'replace',
+		) );
+
 	}
 
 	/**
