@@ -86,6 +86,11 @@ class M_Luna_Woofunnels {
 		return $message;
 	}
 
+	/**
+	 * Remove password strength meter
+	 * @link( https://nicolamustone.com/2016/01/27/remove-the-password-strength-meter-on-the-checkout-page/, link)
+	 * @return [type] [description]
+	 */
 	public function wc_ninja_remove_password_strength() {
 		if ( wp_script_is( 'wc-password-strength-meter', 'enqueued' ) ) {
 			wp_dequeue_script( 'wc-password-strength-meter' );
