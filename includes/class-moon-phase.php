@@ -132,13 +132,13 @@ class M_Moon_phase extends WP_Widget {
 			self::$shortcode
 		);
 
+		$math = self::math();
+
 		// Before widget hook.
 		$widget .= $atts['before_widget'];
 
 		// Title.
 		$widget .= ( $atts['title'] ) ? $atts['before_title'] . esc_html( $atts['title'] ) . $atts['after_title'] : '';
-
-		$math = self::math();
 
 		// Display
 		$widget .= '<br />';
