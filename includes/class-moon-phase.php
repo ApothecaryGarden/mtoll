@@ -231,6 +231,11 @@ class M_Moon_phase extends WP_Widget {
 		<?php
 	}
 
+	/**
+	 * Moon phase math from Joe's (outdated) plugin. Returns all the info in an array.
+	 * @link http://www.joeswebtools.com/wordpress-plugins/moon-phases/
+	 * @return array [description]
+	 */
 	public static function math() {
 		// Get date
 		$y = date('Y');
