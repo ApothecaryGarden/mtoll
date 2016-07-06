@@ -573,7 +573,6 @@ function no_self_ping( &$links ) {
 add_action( 'pre_ping', 'no_self_ping' );
 
 add_action( 'init', 'update_my_custom_type', 99 );
-
 /**
  * update_my_custom_type
  *
@@ -583,9 +582,29 @@ function update_my_custom_type() {
 	global $wp_post_types;
 
 	if ( post_type_exists( 'point' ) ) {
-
 		// exclude from search results
 		$wp_post_types['point']->exclude_from_search = true;
 		$wp_post_types['badges']->exclude_from_search = true;
 	}
+}
+
+add_action( 'woocommerce_save_account_details', 'woocommerce_save_account_details', $user_ID );
+function woocommerce_save_account_details( $uid ) {
+	$dname = get_user_meta( $uid, 'display_name', true );
+	$o_user = get_user_by( 'id', $uid );
+	$o_user->display_name = ! empty( $_POST[ 'account_display_name' ] ) ? wc_clean( $_POST[ 'account_display_name' ] ) : $dname;
+
+	wp_update_user( $o_user );
+
+}
+
+add_action( 'woocommerce_edit_account_form_start', 'mtoll_woocommerce_edit_account_form_start' );
+function mtoll_woocommerce_edit_account_form_start() {
+	$user = wp_get_current_user();
+	?>
+	<p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+		<label for="account_display_name"><?php _e( 'Display name', 'woocommerce' ); ?> <span class="required">*</span></label>
+		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_display_name" id="account_display_name" value="<?php echo esc_attr( $user->display_name ); ?>" />
+	</p>
+	<?php
 }
