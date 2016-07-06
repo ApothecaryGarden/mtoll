@@ -588,7 +588,7 @@ function update_my_custom_type() {
 	}
 }
 
-add_action( 'woocommerce_save_account_details', 'woocommerce_save_account_details', $user_ID );
+add_action( 'woocommerce_save_account_details', 'woocommerce_save_account_details' );
 function woocommerce_save_account_details( $uid ) {
 	$dname = get_user_meta( $uid, 'display_name', true );
 	$o_user = get_user_by( 'id', $uid );
