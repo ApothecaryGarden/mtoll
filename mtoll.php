@@ -571,3 +571,21 @@ function no_self_ping( &$links ) {
 }
 
 add_action( 'pre_ping', 'no_self_ping' );
+
+add_action( 'init', 'update_my_custom_type', 99 );
+
+/**
+ * update_my_custom_type
+ *
+ * @author  Joe Sexton <joe@webtipblog.com>
+ */
+function update_my_custom_type() {
+	global $wp_post_types;
+
+	if ( post_type_exists( 'point' ) ) {
+
+		// exclude from search results
+		$wp_post_types['point']->exclude_from_search = true;
+		$wp_post_types['badges']->exclude_from_search = true;
+	}
+}
