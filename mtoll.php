@@ -33,7 +33,8 @@
 /**
  * Built using generator-plugin-wp
  */
-
+require_once dirname(__FILE__) . '/../vendor/cpt-core/CPT_Core.php';
+require_once dirname(__FILE__) . '/../vendor/cmb2/init.php';
 
 /**
  * Autoloads files with classes when needed

@@ -6,9 +6,6 @@
  * @package Mtoll
  */
 
-require_once dirname(__FILE__) . '/../vendor/cpt-core/CPT_Core.php';
-require_once dirname(__FILE__) . '/../vendor/cmb2/init.php';
-
 class M_Flower_Oracle extends CPT_Core {
 	/**
 	 * Parent plugin class

@@ -5,8 +5,6 @@
  * @package Mtoll
  */
 
-require_once dirname(__FILE__) . '/../vendor/cmb2/init.php';
-
 class M_Maia_Admin {
 	/**
 	 * Parent plugin class
