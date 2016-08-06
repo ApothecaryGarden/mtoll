@@ -117,7 +117,7 @@ class MaiaToll_Admin {
 
 		$cmb->add_field( array(
 			'name' => __( 'Where am I?', 'mtoll' ),
-			'id' => $prefix . 'where_am_i',
+			'id' => 'where_am_i',
 			'type' => 'radio',
 			'default' => 'maiatoll',
 			'options' => array(
