@@ -119,10 +119,10 @@ class MaiaToll_Admin {
 			'name' => __( 'Where am I?', 'mtoll' ),
 			'id' => 'where_am_i',
 			'type' => 'radio',
-			'default' => 'maiatoll',
+			'default' => 'mt',
 			'options' => array(
-				'maiatoll' => __( 'maiatoll', 'mtoll' ),
-				'witchcamp' => __( 'witchcamp', 'mtoll' ),
+				'mt' => __( 'maiatoll', 'mtoll' ),
+				'wc' => __( 'witchcamp', 'mtoll' ),
 			),
 		) );
 	}
