@@ -145,33 +145,14 @@ class Mtoll {
 	public function plugin_classes() {
 		// Attach other plugin classes to the base plugin class.
 
-	//	$this->maia_admin = new M_Maia_Admin( $this );
-
 		// post types
-		$this->lounge = new M_Lounge( $this );
-		$this->premium = new M_Premium( $this );
 		$this->flower_oracle = new M_Flower_Oracle( $this );
-
-		// widgets
-		require( self::dir( 'includes/class-badge143.php' ) );
-		require( self::dir( 'includes/class-dynamic-lounge-image.php' ) );
-		require( self::dir( 'includes/class-moon-phase.php' ) );
-		require( self::dir( 'includes/class-landing-login.php' ) );
 
 		// options panel
 		require( self::dir( 'includes/admin.php' ) );
 
-		// some functions for woocommerce subscriptions
-		require( self::dir( 'includes/subscription-functions.php' ) );
-
 		// should probably be in the theme
 		$this->theme_settings = new M_Theme_Settings( $this );
-
-
-		// magic
-		$this->points = new M_Points( $this );
-		M_Create_Relate_Points::get_instance();
-	//	$this->luna_woofunnels = new M_Luna_Woofunnels( $this );
 
 	} // END OF PLUGIN CLASSES FUNCTION
 
@@ -293,14 +274,8 @@ class Mtoll {
 			case 'basename':
 			case 'url':
 			case 'path':
-			case 'maia_admin':
-			case 'lounge':
-			case 'premium':
-			case 'luna_woofunnels':
 			case 'flower_oracle':
 			case 'theme_settings':
-			case 'points':
-			case 'create_relate_points':
 				return $this->$field;
 			default:
 				throw new Exception( 'Invalid '. __CLASS__ .' property: ' . $field );
@@ -364,170 +339,6 @@ function mtoll() {
 add_action( 'plugins_loaded', array( mtoll(), 'hooks' ) );
 
 
-add_filter( 'woofunnels_checkout_page_templates', 'mllp_checkout_page_template' );
-function mllp_checkout_page_template( $templates ) {
-		$plugin_path  = plugin_dir_path( __FILE__ ) . 'templates/';
-		$templates['maia-lunar-lounge'] = array(
-		'label'       => __( 'Maia Lunar Lounge Signup', 'maiatoll' ),
-			'description' => __( 'Signup Page', 'maiatoll' ),
-			'path' => $plugin_path,
-			'callback'		=> 'woofunnels_maia_lunar_lounge',
-		);
-		$templates['first-promo'] = array(
-		'label'       => __( 'First Promo', 'maiatoll' ),
-			'description' => __( 'Signup for the first promo', 'maiatoll' ),
-			'path' => $plugin_path,
-			'callback'		=> 'woofunnels_maia_lunar_lounge',
-		);
-		return $templates;
-}
-
-function woofunnels_maia_lunar_lounge() {
-	new M_Luna_Woofunnels();
-}
-
-
-/**
- *
- */
-add_filter( 'woofunnels_checkout_form_templates', 'mllp_checkout_form_template' );
-function mllp_checkout_form_template( $templates ) {
-		$plugin_path  = plugin_dir_path( __FILE__ ) . 'templates/';
-		$templates['maia-lunar-lounge'] = array(
-			'label'       => __( 'Lunar Lounge Form', 'maiatoll' ),
-			'description' => __( 'for Maia Lunar Lounge Signup page template', 'maiatoll' ),
-			'path' => $plugin_path,
-			'callback'		=> 'woofunnels_maia_lunar_lounge_checkout_form',
-		);
-		$templates['first-promo'] = array(
-			'label'       => __( 'First Promo Form', 'maiatoll' ),
-			'description' => __( 'for the first promo', 'maiatoll' ),
-			'path' => $plugin_path,
-			'callback'		=> 'woofunnels_maia_lunar_lounge_checkout_form',
-		);
-		return $templates;
-}
-
-function woofunnels_maia_lunar_lounge_checkout_form(){
-	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
-}
-
-/**
- *
- */
-add_filter( 'woofunnels_product_block_templates', 'mllp_product_block_template' );
-function mllp_product_block_template( $templates ) {
-	$plugin_path  = plugin_dir_path( __FILE__ ) . 'templates/';
-	$templates['maia-lunar-lounge-table'] = array(
-		'label'       => __( 'Lunar Lounge Form', 'maiatoll' ),
-		'description' => __( 'for Maia Lunar Lounge Signup page template', 'maiatoll' ),
-		'path' => $plugin_path,
-	);
-	$templates['first-promo-block'] = array(
-		'label'       => __( 'First Promo Block', 'maiatoll' ),
-		'description' => __( '', 'maiatoll' ),
-		'path' => $plugin_path,
-	);
-	return $templates;
-}
-
-/**
- *
- */
-function maia_login_redirect_url() {
-		$id  = get_queried_object_id();
-		$url = wc_get_page_permalink( 'myaccount' );
-
-		if ( is_singular() ) {
-			$redirect_to = 'post';
-		} elseif ( isset( get_queried_object()->term_id ) ) {
-			$redirect_to = get_queried_object()->taxonomy;
-		} else {
-			$redirect_to = '';
-		}
-
-		if ( ! empty( $redirect_to ) ) {
-
-			$url = add_query_arg( array(
-				'wcm_redirect_to' => $redirect_to,
-				'wcm_redirect_id' => $id,
-			), $url );
-		}
-
-		return esc_url( $url );
-}
-
-add_filter( 'wc_memberships_content_restricted_message', 'mtoll_master_membership_filter', 10, 3 );
-function mtoll_master_membership_filter( $message, $post_id, $access_time ) {
-	if ( 'lounge' === get_post_type( $post_id )
-		|| 'premium' === get_post_type( $post_id )
-		|| $post_id == maiatoll_get_option( 'maiatoll_hub_page' ) ) {
-			// WP_Query arguments
-		// WP_Query arguments
-		$block = maiatoll_get_option( 'maiatoll_witchcamp_sign_up_in' );
-		$args = array (
-			'p' => $block,
-			'post_type' => 'page',
-		);
-
-		// The Query
-		$query = new WP_Query( $args );
-
-		// The Loop
-		if ( $query->have_posts() ) {
-			while ( $query->have_posts() ) {
-				$query->the_post();
-			//	the_content();
-				$message = apply_filters( 'the_content', get_the_content() );
-			}
-		} else {
-
-		}
-
-		// Restore original Post Data
-		wp_reset_postdata();
-
-	//	$p = get_post(14526);
-	//	$message = $p->post_title;
-	//	$message .= 'abc';
-	//	$message .= apply_filters('the_content', get_post_field('post_content', '14526'));
-	//	$message = 'To access this content, you must <a href="http://staging.bizarre-cord.flywheelsites.com/woofunnels_checkout/lunar-lounge-signup/?empty-cart&add-to-cart=13594">signup for a free membership</a>, or <a href="' . maia_login_redirect_url() . '">log in</a> if you are a member.';
-
-	//	if ( is_user_logged_in() ) {
-		//	$message = 'To access this content, you must <a href="' . esc_url( get_permalink( maiatoll_get_option( 'maiatoll_witchcamp_signup_page' ) ) ) . '">sign up here</a>.';
-
-	//	} else {
-		//	$message = 'To access this content, you must <a href="' . esc_url( get_permalink( maiatoll_get_option( 'maiatoll_witchcamp_signup_page' ) ) ) . '">sign up</a>, or <a href="' . maia_login_redirect_url() . '">log in</a> if you are a member.';
-	//	}
-	//	$message = '';
-	}
-	return $message;
-}
-
-// add_filter( 'wc_memberships_content_restricted_message', 'sv_filter_content_delayed_message1', 10, 3 );
-function sv_filter_content_delayed_message1( $message, $post_id, $access_time ) {
-	if ( 'premium' === get_post_type( $post_id ) ) {
-
-		$message = 'To access this content, you must <a href="http://staging.bizarre-cord.flywheelsites.com/woofunnels_checkout/lunar-lounge-signup/?empty-cart&add-to-cart=13593">purchase a premium membership</a>, or <a href="' . maia_login_redirect_url() . '">log in</a> if you are a member.';
-
-	}
-	return $message;
-}
-
-add_action('template_redirect', 'lounge_closed');
-function lounge_closed(){
-// echo maiatoll_get_option( 'radio' );
-	if ( is_singular( 'lounge' ) && 'closed' === maiatoll_get_option( 'maiatoll_luna_lounge_open' ) ) {
-		wp_redirect( esc_url( get_permalink( maiatoll_get_option( 'maiatoll_luna_lounge_closed_redirect' ) ) ) );
-		exit;
-	}
-//	if ( ( is_singular( 'premium' ) || is_post_type_archive( 'premium' ) ) && 'closed' === maiatoll_get_option( 'maiatoll_luna_lounge_premium_open' ) ) {
-//		wp_redirect( esc_url( get_permalink( maiatoll_get_option( 'maiatoll_luna_lounge_premium_closed_post' ) ) ) );
-//		exit;
-//	}
-}
-
-
 add_action( 'cmb2_admin_init', 'maia_landing_page_metabox' );
 function maia_landing_page_metabox() {
 
@@ -587,27 +398,6 @@ function update_my_custom_type() {
 		$wp_post_types['point']->exclude_from_search = true;
 		$wp_post_types['badges']->exclude_from_search = true;
 	}
-}
-
-add_action( 'woocommerce_save_account_details', 'woocommerce_save_account_details' );
-function woocommerce_save_account_details( $uid ) {
-	$dname = get_user_meta( $uid, 'display_name', true );
-	$o_user = get_user_by( 'id', $uid );
-	$o_user->display_name = ! empty( $_POST[ 'account_display_name' ] ) ? wc_clean( $_POST[ 'account_display_name' ] ) : $dname;
-
-	wp_update_user( $o_user );
-
-}
-
-add_action( 'woocommerce_edit_account_form_start', 'mtoll_woocommerce_edit_account_form_start' );
-function mtoll_woocommerce_edit_account_form_start() {
-	$user = wp_get_current_user();
-	?>
-	<p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
-		<label for="account_display_name"><?php _e( 'Display name', 'woocommerce' ); ?> <span class="required">*</span></label>
-		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_display_name" id="account_display_name" value="<?php echo esc_attr( $user->display_name ); ?>" />
-	</p>
-	<?php
 }
 
 add_action( 'wp_head', 'mtoll_fb_pixel_wp_head' );
