@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Mtoll
- * Plugin URI:  http://wpguru4u.com
+ * Plugin URI:  https://github.com/ApothecaryGarden/mtoll/
  * Description: A little bit of Awesomeness for Maia
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      wpguru4u
  * Author URI:  http://wpguru4u.com
  * Donate link: http://wpguru4u.com
